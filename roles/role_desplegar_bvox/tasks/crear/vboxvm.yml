@@ -18,12 +18,12 @@
       register: vbxvml_sttos
       when: "'RedHat' in vmostype"
 
-    - name: Asignando disco extra para VirtuaBox Linux
-      shell: |
-        VBoxManage createhd --filename {{ dirdisknvmg }}/{{ vmname }}/vbal{{ vbvmcl_oslver }}_{{ vbvmcl_nldks }}.vdi --size {{ nwdsksz }} --format VDI
-        VBoxManage storageattach {{ vmname }} --storagectl SATA --port 1 --device 0 --type hdd --medium {{ dirdisknvmg }}/{{ vmname }}/vbal{{ vbvmcl_oslver }}_{{ vbvmcl_nldks }}.vdi
-      register: vbxvml_sttsd
-      when: "vbvmcl_nldks == 'sdb'"
+    # - name: Asignando disco extra para VirtuaBox Linux
+    #   shell: |
+    #     VBoxManage createhd --filename {{ dirdisknvmg }}/{{ vmname }}/vbal{{ vbvmcl_oslver }}_{{ vbvmcl_nldks }}.vdi --size {{ nwdsksz }} --format VDI
+    #     VBoxManage storageattach {{ vmname }} --storagectl SATA --port 1 --device 0 --type hdd --medium {{ dirdisknvmg }}/{{ vmname }}/vbal{{ vbvmcl_oslver }}_{{ vbvmcl_nldks }}.vdi
+    #   register: vbxvml_sttsd
+    #   when: "vbvmcl_nldks == 'sdb'"
 
     - name: Creando VirtuaBox Windows
       shell: |
@@ -40,12 +40,12 @@
       register: vbxvmw_sttos
       when: "'Windows' in vmostype"
 
-    - name: Asignando disco extra para VirtuaBox Windows
-      shell: |
-        VBoxManage createhd --filename {{ dirdisknvmg }}/{{ vmname }}/vbw{{ vbvmcl_oswver }}_{{ vbvmcl_nwdks }}.vdi --size {{ nwdsksz }} --format VDI
-        VBoxManage storageattach {{ vmname }} --storagectl SATA --port 1 --device 0 --type hdd --medium {{ dirdisknvmg }}/{{ vmname }}/vbw{{ vbvmcl_oswver }}_{{ vbvmcl_nwdks }}.vdi
-      register: vbxvmw_stthd
-      when: "vbvmcl_nwdks == 'hdd1'"
+    # - name: Asignando disco extra para VirtuaBox Windows
+    #   shell: |
+    #     VBoxManage createhd --filename {{ dirdisknvmg }}/{{ vmname }}/vbw{{ vbvmcl_oswver }}_{{ vbvmcl_nwdks }}.vdi --size {{ nwdsksz }} --format VDI
+    #     VBoxManage storageattach {{ vmname }} --storagectl SATA --port 1 --device 0 --type hdd --medium {{ dirdisknvmg }}/{{ vmname }}/vbw{{ vbvmcl_oswver }}_{{ vbvmcl_nwdks }}.vdi
+    #   register: vbxvmw_stthd
+    #   when: "vbvmcl_nwdks == 'hdd1'"
 
     - name: Iniciar Maquina VirtuaBox
       shell: |

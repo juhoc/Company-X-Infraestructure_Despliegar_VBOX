@@ -1,0 +1,46 @@
+---
+- name: Tareas por bloques - Validacion formato CRQ o ICR
+  block:
+    - set_fact:
+        idhelix: "{{ idcrqinc | trim }}"
+      run_once: true
+      delegate_to: localhost
+
+    - name: Validando Formato de Cambio o Incidente
+      assert:
+        that:
+          - idhelix | string | regex_search('(CRQ|INC|REQ)[0-9]{12}')
+        fail_msg: "El CRQ, INC o REQ no cumplen con la condiciones del formato"
+        success_msg: "El CRQ, INC o REQ cumplen con las condiciones del formato"
+      run_once: true
+      delegate_to: localhost
+
+- set_fact:
+    run_playbook: |
+      {% if tarea == 'Crear_VM_Linux' %}
+      ['llamar/teams']
+      {% elif tarea == 'Crear_VM_Windows' %}
+      ['llamar/usuarios']
+      {% elif tarea == 'Destruir_VM_Linux' %}
+      ['llamar/teams_usuarios']
+      {% elif tarea == 'Destruir_VM_Windows' %}
+      ['llamar/teams_usuarios']
+      {% else %}
+      ['No_selecciono_ninguna_tarea']
+      {% endif %}
+
+- name: Resultado de la seleccion
+  become: true
+  assert:
+    that:
+      - "'No_selecciono_ninguna_tarea' not in run_playbook"
+    fail_msg: "run_playbook"
+    success_msg: "Ha seleccionado: {{ run_playbook | replace('\n', '') }}"
+  run_once: true
+  delegate_to: localhost
+
+- name: Inicia tareas {{ run_playbook }}
+  include_tasks: "{{ tareas }}.yml"
+  loop: "{{ run_playbook }}"
+  loop_control:
+    loop_var: tareas

@@ -1,0 +1,12 @@
+---
+dirdiskcwin: /home/juhoc/VirtualBox/VMs/windows
+dirdiskclnx: /home/juhoc/VirtualBox/VMs/linux
+dirdisknvmg: /home/juhoc/VirtualBox/VMs
+
+tower_base_url: "http://172.19.0.2:8052"
+tower_organization: "bvmorg"
+tower_inventory: "bvm_inventory"
+tower_token: "kpcGLWlxEsVx2fSSJMCeSmwhjI9h4H"
+
+tower_user: "{{ lookup('env','TOWER_USERNAME') }}"
+tower_password: "{{ lookup('env','TOWER_PASSWORD') }}"
