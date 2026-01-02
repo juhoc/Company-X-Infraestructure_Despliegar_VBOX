@@ -18,13 +18,17 @@
 - set_fact:
     run_playbook: |
       {% if tarea == 'Crear_VM_Linux' %}
-      ['llamar/teams']
+      ['crear/vboxvm']
       {% elif tarea == 'Crear_VM_Windows' %}
-      ['llamar/usuarios']
-      {% elif tarea == 'Destruir_VM_Linux' %}
-      ['llamar/teams_usuarios']
-      {% elif tarea == 'Destruir_VM_Windows' %}
-      ['llamar/teams_usuarios']
+      ['borrar/vboxvm']
+      {% elif tarea == 'Desconectar_VM' %}
+      ['desconectar/vboxvm']
+      {% elif tarea == 'Conectar_VM' %}
+      ['conectar/vboxvm']
+      {% elif tarea == 'Destruir_VM' %}
+      ['destruir/vboxvm']
+      {% elif tarea == 'Test_VM' %}
+      ['test/vboxvm']
       {% else %}
       ['No_selecciono_ninguna_tarea']
       {% endif %}
