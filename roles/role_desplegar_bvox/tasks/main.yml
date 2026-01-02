@@ -27,8 +27,8 @@
       ['conectar/vboxvm']
       {% elif tarea == 'Destruir_VM' %}
       ['destruir/vboxvm']
-      {% elif tarea == 'Test_VM' %}
-      ['test/vboxvm']
+      {% elif tarea == 'Prueba_VM' %}
+      ['prueba/vboxvm']
       {% else %}
       ['No_selecciono_ninguna_tarea']
       {% endif %}
