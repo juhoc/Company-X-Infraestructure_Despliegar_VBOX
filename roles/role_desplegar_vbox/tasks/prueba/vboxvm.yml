@@ -3,3 +3,5 @@
     msg: 
       - "{{ idcrqinc }}"
       - "{{ vbvmgst_name }}"
+      - "{{ vbvmgst_ostype }}"
+      - "{{ vbvmgs_sources }}"
