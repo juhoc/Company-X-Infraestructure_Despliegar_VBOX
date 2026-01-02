@@ -1,13 +1,13 @@
 - name: Prueba agrupando ecos
   set_fact:
     vbvmgst_source: |
-      {% if vbvmgst_sources in "small" %}
+      {% if 'small' in vbvmgst_sources %}
       1,1
-      {% elif vbvmgst_sources in "medium" %}
+      {% elif 'medium' in vbvmgst_sources %}
       1,2
-      {% elif vbvmgst_sources in "large" %}
+      {% elif 'large' in vbvmgst_sources %}
       2,2
-      {% elif vbvmgst_sources in "xlarge" %}
+      {% elif 'xlarge' in vbvmgst_sources %}
       2,3
       {% endif %}
 
