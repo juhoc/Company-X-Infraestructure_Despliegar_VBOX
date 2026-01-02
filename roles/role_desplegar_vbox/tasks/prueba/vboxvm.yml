@@ -1,6 +1,6 @@
 - name: Prueba agrupando ecos
   set_fact:
-    vbvmgst_sources: |
+    vbvmgst_source: |
       {% if tarea in 'small' %}
       1,1
       {% elif tarea in 'medium' %}
@@ -17,4 +17,4 @@
       - "{{ idcrqinc }}"
       - "{{ vbvmgst_name }}"
       - "{{ vbvmgst_ostype }}"
-      - "{{ vbvmgst_sources }}"
+      - "{{ vbvmgst_source }}"
