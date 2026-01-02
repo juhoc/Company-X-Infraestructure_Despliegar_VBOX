@@ -17,4 +17,4 @@
       - "{{ idcrqinc }}"
       - "{{ vbvmgst_name }}"
       - "{{ vbvmgst_ostype }}"
-      - "{{ vbvmgst_source }}"
+      - "{{ vbvmgst_source | trim }}"
