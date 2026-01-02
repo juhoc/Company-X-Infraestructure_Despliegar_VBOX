@@ -1,3 +1,4 @@
 - name: Prueba de varibles
   debug:
-    msg: "{{ idcrqinc }}"
+    msg: 
+      - "{{ idcrqinc }}"
