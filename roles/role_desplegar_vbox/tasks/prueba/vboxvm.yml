@@ -4,4 +4,4 @@
       - "{{ idcrqinc }}"
       - "{{ vbvmgst_name }}"
       - "{{ vbvmgst_ostype }}"
-      - "{{ vbvmgst_sources }}"
+      - "{{ vbvmgst_sources.split('-')[0] }}"
