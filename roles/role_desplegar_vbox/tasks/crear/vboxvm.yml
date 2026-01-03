@@ -87,17 +87,17 @@
   #     when: "vbvm_up == 'Si'"
   # ignore_errors: true
 
-- name: Tareas por bloques - VirtualBox Guest pertenece al ambiente Produccion o Desarrollo
-  block:
-    - name: Verificar VirtuaBox Guest Linux es produccion o desarrollo
-      shell: echo "{{ vmname }}" | grep -i vblp >/dev/null && echo produccion || echo desarrollo
-      register: vbvmgt_envl
-      when: "'RedHat' in vmostype"
+# - name: Tareas por bloques - VirtualBox Guest pertenece al ambiente Produccion o Desarrollo
+#   block:
+#     - name: Verificar VirtuaBox Guest Linux es produccion o desarrollo
+#       shell: echo "{{ vmname }}" | grep -i vblp >/dev/null && echo produccion || echo desarrollo
+#       register: vbvmgt_envl
+#       when: "'RedHat' in vmostype"
 
-    - name: Verificar VirtuaBox Guest Windows es produccion o desarrollo
-      shell: echo "{{ vmname }}" | grep -i vbwp >/dev/null && echo produccion || echo desarrollo
-      register: vbvmgt_envw
-      when: "'Windows' in vmostype"
+#     - name: Verificar VirtuaBox Guest Windows es produccion o desarrollo
+#       shell: echo "{{ vmname }}" | grep -i vbwp >/dev/null && echo produccion || echo desarrollo
+#       register: vbvmgt_envw
+#       when: "'Windows' in vmostype"
 
 - name: Tareas por bloques - Imprimir Resultados VM Linux
   block:

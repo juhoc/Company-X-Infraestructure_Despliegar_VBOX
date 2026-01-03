@@ -18,15 +18,15 @@
 - set_fact:
     run_playbook: |
       {% if tarea == 'Crear_VM_Linux' %}
-      ['crear/vboxvm']
+      ['ambientar/vboxvm','crear/vboxvm']
       {% elif tarea == 'Crear_VM_Windows' %}
-      ['borrar/vboxvm']
+      ['ambientar/vboxvm','borrar/vboxvm']
       {% elif tarea == 'Desconectar_VM' %}
-      ['desconectar/vboxvm']
+      ['ambientar/vboxvm','desconectar/vboxvm']
       {% elif tarea == 'Conectar_VM' %}
-      ['conectar/vboxvm']
+      ['ambientar/vboxvm','conectar/vboxvm']
       {% elif tarea == 'Destruir_VM' %}
-      ['destruir/vboxvm']
+      ['ambientar/vboxvm','destruir/vboxvm']
       {% elif tarea == 'Prueba_VM' %}
       ['prueba/vboxvm']
       {% else %}
