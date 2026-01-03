@@ -22,11 +22,11 @@
 - name: Prueba agrupando eco tipo de ambiente
   set_fact:
     vmenv: |
-      {% if 'lvp' in vmname %}
+      {% if 'vp' in vmname %}
       produccion
-      {% elif 'lvd' in vmname %}
+      {% elif 'vd' in vmname %}
       desarrollo
-      {% elif 'lvo' in vmname %}
+      {% elif 'vo' in vmname %}
       "liga oculta"
       {% endif %}
 
