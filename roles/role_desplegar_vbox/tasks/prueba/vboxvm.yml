@@ -23,11 +23,11 @@
   set_fact:
     vmenv: |
       {% if 'vp' in vmname %}
-      produccion
+      produccion,pr
       {% elif 'vd' in vmname %}
-      desarrollo
+      desarrollo,ds
       {% elif 'vlo' in vmname %}
-      liga oculta
+      liga oculta,lo
       {% endif %}
 
 - name: Prueba agrupando eco de recursos
@@ -42,4 +42,5 @@
       - "{{ vmcpu | trim }}"
       - "{{ vmmem | trim }}"
       - "{{ vmdsk | trim }}"
-      - "{{ vmenv | trim }}"
+      - "{{ vmenv.split(',')[0] | trim }}"
+      - "{{ vmenv.split(',')[1] | trim }}"
