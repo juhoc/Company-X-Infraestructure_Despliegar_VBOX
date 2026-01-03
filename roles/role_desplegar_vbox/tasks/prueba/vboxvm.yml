@@ -11,7 +11,7 @@
       2,3072,56320
       {% endif %}
 
-- name: Prueba de varibles
+- name: Prueba de varibles 1
   debug:
     msg: 
       - "{{ idcrqinc }}"
@@ -24,3 +24,10 @@
     vmcpu: "{{ vmsource.split(',')[0] | trim }}"
     vmmem: "{{ vmsource.split(',')[1] | trim }}"
     vmdsk: "{{ vmsource.split(',')[2] | trim }}"
+
+- name: Prueba de varibles 2
+  debug:
+    msg: 
+      - "{{ vmcpu | trim }}"
+      - "{{ vmmem | trim }}"
+      - "{{ vmdsk | trim }}"
