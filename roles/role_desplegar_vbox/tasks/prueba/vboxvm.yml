@@ -26,7 +26,7 @@
       produccion
       {% elif 'vd' in vmname %}
       desarrollo
-      {% elif 'vo' in vmname %}
+      {% elif 'vlo' in vmname %}
       liga oculta
       {% endif %}
 
