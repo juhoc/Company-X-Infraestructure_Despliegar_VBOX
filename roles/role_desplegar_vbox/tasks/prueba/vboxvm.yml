@@ -19,6 +19,17 @@
       - "{{ vmostype }}"
       - "{{ vmsource | trim }}"
 
+- name: Prueba agrupando eco tipo de ambiente
+  set_fact:
+    vmenv: |
+      {% if 'lvp' in vmname %}
+      produccion
+      {% elif 'lvd' in vmname %}
+      desarrollo
+      {% elif 'lvo' in vmname %}
+      "liga oculta"
+      {% endif %}
+
 - name: Prueba agrupando eco de recursos
   set_fact:
     vmcpu: "{{ vmsource.split(',')[0] | trim }}"
@@ -31,3 +42,4 @@
       - "{{ vmcpu | trim }}"
       - "{{ vmmem | trim }}"
       - "{{ vmdsk | trim }}"
+      - "{{ vmenv | trim }}"

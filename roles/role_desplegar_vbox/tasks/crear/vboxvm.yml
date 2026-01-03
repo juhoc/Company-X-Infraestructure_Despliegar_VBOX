@@ -1,44 +1,69 @@
 ---
+- name: Tipo de recusos virtuales seleccionados
+  set_fact:
+    vmsource: |
+      {% if 'small' in vmsources %}
+      1,1024,56320
+      {% elif 'medium' in vmsources %}
+      1,2048,56320
+      {% elif 'large' in vmsources %}
+      2,2048,56320
+      {% elif 'xlarge' in vmsources %}
+      2,3072,56320
+      {% endif %}
+
+- name: Parsear los recursos virtuales seleccionados
+  set_fact:
+    vmcpu: "{{ vmsource.split(',')[0] | trim }}"
+    vmmem: "{{ vmsource.split(',')[1] | trim }}"
+    vmdsk: "{{ vmsource.split(',')[2] | trim }}"
+
+
 - name: Tareas por bloques - Crear de virtuales en MasterServer VirtualBox
   block:
     - name: Creando VirtuaBox Linux
       shell: |
-        VBoxManage createvm --name {{ vmname }} --ostype {{ vmostype }} --register --basefolder {{ dirdisknvmg }}
+        VBoxManage createvm --name {{ vmname }} --ostype {{ vmostype }} --register --basefolder {{ vmdftfld }}
         VBoxManage modifyvm {{ vmname }} --ioapic on
-        VBoxManage modifyvm {{ vmname }} --cpus {{ vmcpu   }}
+        VBoxManage modifyvm {{ vmname }} --cpus {{ vmcpu }}
         VBoxManage modifyvm {{ vmname }} --audio none
         VBoxManage modifyvm {{ vmname }} --memory {{ vmmem }}
         VBoxManage modifyvm {{ vmname }} --graphicscontroller vmsvga
         VBoxManage modifyvm {{ vmname }} --vram 16
         VBoxManage modifyvm {{ vmname }} --nic1 bridged --nictype1 82545EM --bridgeadapter1 enp0s31f6
         VBoxManage modifyvm {{ vmname }} --nic2 hostonly --nictype2 82545EM --hostonlyadapter2 vboxnet0
+        VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/0/V4/IP 2>/dev/null | sed 's/Value: //g'
+        VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/1/V4/IP 2>/dev/null | sed 's/Value: //g'
         VBoxManage storagectl {{ vmname }} --name SATA --add sata --controller IntelAHCI --portcount 1
-        VBoxManage clonemedium {{ dirdisknvmg }}/{{ vmostype }}/vbal{{ vbvmcl_oslver }}clone.vdi {{ dirdisknvmg }}/{{ vmname }}/vbal{{ vbvmcl_oslver }}_sda.vdi --format VDI
+        VBoxManage clonemedium {{ vmclnfld }}/vmos/{{ vmostype }}.vdi {{ dirdisknvmg }}/{{ vmname }}/sd_system.vdi --format VDI
         VBoxManage storageattach {{ vmname }} --storagectl SATA --port 0 --device 0 --type hdd --medium {{ dirdisknvmg }}/{{ vmname }}/vbal{{ vbvmcl_oslver }}_sda.vdi
-      register: vbxvml_sttos
-      when: "'RedHat' in vmostype"
+        VBoxManage createhd --filename {{ vmdftfld }}/{{ vmname }}/sd_data00.vdi --size {{ vmdsk }} --format VDI
+        VBoxManage storageattach {{ vmname }} --storagectl SATA --port 1 --device 0 --type hdd --medium {{ vmdftfld }}/{{ vmname }}/sd_data00.vdi
+
+      # register: vbxvml_sttos
+      # when: "'RedHat' in vmostype"
 
     # - name: Asignando disco extra para VirtuaBox Linux
     #   shell: |
-    #     VBoxManage createhd --filename {{ dirdisknvmg }}/{{ vmname }}/vbal{{ vbvmcl_oslver }}_{{ vbvmcl_nldks }}.vdi --size {{ nwdsksz }} --format VDI
-    #     VBoxManage storageattach {{ vmname }} --storagectl SATA --port 1 --device 0 --type hdd --medium {{ dirdisknvmg }}/{{ vmname }}/vbal{{ vbvmcl_oslver }}_{{ vbvmcl_nldks }}.vdi
+    #     VBoxManage createhd --filename {{ vmdftfld }}/{{ vmname }}/sd_data00.vdi --size {{ vmdsk }} --format VDI
+    #     VBoxManage storageattach {{ vmname }} --storagectl SATA --port 1 --device 0 --type hdd --medium {{ vmdftfld }}/{{ vmname }}/sd_data00.vdi
     #   register: vbxvml_sttsd
     #   when: "vbvmcl_nldks == 'sdb'"
 
-    - name: Creando VirtuaBox Windows
-      shell: |
-        VBoxManage createvm --name {{ vmname }} --ostype {{ vmostype }} --register --basefolder {{ dirdisknvmg }}
-        VBoxManage modifyvm {{ vmname }} --ioapic on
-        VBoxManage modifyvm {{ vmname }} --cpus {{ vmcpu }}
-        VBoxManage modifyvm {{ vmname }} --audio none
-        VBoxManage modifyvm {{ vmname }} --memory {{ vmmem }}
-        VBoxManage modifyvm {{ vmname }} --nic1 bridged --nictype1 82545EM --bridgeadapter1 enp0s31f6
-        VBoxManage modifyvm {{ vmname }} --nic2 hostonly --nictype2 82545EM --hostonlyadapter2 vboxnet0
-        VBoxManage storagectl {{ vmname }} --name SATA --add sata --controller IntelAHCI --portcount 1
-        VBoxManage clonemedium {{ dirdisknvmg }}/{{ vmostype }}/vbw{{ vbvmcl_oswver }}clone.vdi {{ dirdisknvmg }}/{{ vmname }}/vbw{{ vbvmcl_oswver }}_hdd0.vdi --format VDI
-        VBoxManage storageattach {{ vmname }} --storagectl SATA --port 0 --device 0 --type hdd --medium {{ dirdisknvmg }}/{{ vmname }}/vbw{{ vbvmcl_oswver }}_hdd0.vdi
-      register: vbxvmw_sttos
-      when: "'Windows' in vmostype"
+    # - name: Creando VirtuaBox Windows
+    #   shell: |
+    #     VBoxManage createvm --name {{ vmname }} --ostype {{ vmostype }} --register --basefolder {{ dirdisknvmg }}
+    #     VBoxManage modifyvm {{ vmname }} --ioapic on
+    #     VBoxManage modifyvm {{ vmname }} --cpus {{ vmcpu }}
+    #     VBoxManage modifyvm {{ vmname }} --audio none
+    #     VBoxManage modifyvm {{ vmname }} --memory {{ vmmem }}
+    #     VBoxManage modifyvm {{ vmname }} --nic1 bridged --nictype1 82545EM --bridgeadapter1 enp0s31f6
+    #     VBoxManage modifyvm {{ vmname }} --nic2 hostonly --nictype2 82545EM --hostonlyadapter2 vboxnet0
+    #     VBoxManage storagectl {{ vmname }} --name SATA --add sata --controller IntelAHCI --portcount 1
+    #     VBoxManage clonemedium {{ dirdisknvmg }}/{{ vmostype }}/vbw{{ vbvmcl_oswver }}clone.vdi {{ dirdisknvmg }}/{{ vmname }}/vbw{{ vbvmcl_oswver }}_hdd0.vdi --format VDI
+    #     VBoxManage storageattach {{ vmname }} --storagectl SATA --port 0 --device 0 --type hdd --medium {{ dirdisknvmg }}/{{ vmname }}/vbw{{ vbvmcl_oswver }}_hdd0.vdi
+    #   register: vbxvmw_sttos
+    #   when: "'Windows' in vmostype"
 
     # - name: Asignando disco extra para VirtuaBox Windows
     #   shell: |
@@ -47,20 +72,20 @@
     #   register: vbxvmw_stthd
     #   when: "vbvmcl_nwdks == 'hdd1'"
 
-    - name: Iniciar Maquina VirtuaBox
-      shell: |
-        VBoxManage startvm {{ vmname }} --type headless
-        sleep 30
-      register: vbxvm_sttup
+    # - name: Iniciar Maquina VirtuaBox
+    #   shell: |
+    #     VBoxManage startvm {{ vmname }} --type headless
+    #     sleep 30
+    #   register: vbxvm_sttup
 
-    - name: Asignando red para la VirtuaBox
-      shell: |
-        sleep 15
-        VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/0/V4/IP 2>/dev/null | sed 's/Value: //g'
-        VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/1/V4/IP 2>/dev/null | sed 's/Value: //g'
-      register: vbxvm_sttnet
-      when: "vbvm_up == 'Si'"
-  ignore_errors: true
+  #   - name: Asignando red para la VirtuaBox
+  #     shell: |
+  #       sleep 15
+  #       VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/0/V4/IP 2>/dev/null | sed 's/Value: //g'
+  #       VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/1/V4/IP 2>/dev/null | sed 's/Value: //g'
+  #     register: vbxvm_sttnet
+  #     when: "vbvm_up == 'Si'"
+  # ignore_errors: true
 
 - name: Tareas por bloques - VirtualBox Guest pertenece al ambiente Produccion o Desarrollo
   block:
@@ -82,24 +107,23 @@
           - "Informacion de la VirtualBox Guest"
           - "Hostname: {{ vmname }}"
           - "Distribucion OS: {{ vmostype }}"
-          - "Version OS: {{ vbvmcl_oslver }}"
           - "Ambiente: {{ vbvmgt_envl.stdout }}"
           - "Numero de CPU's: {{ vmcpu }}"
           - "Memoria Total: {{ vmmem }}"
           - "IP Dinamica1: {{ vbxvm_sttnet.stdout_lines[0] }}"
           - "IP Dinamica2: {{ vbxvm_sttnet.stdout_lines[1] }}"
-      when: "'RedHat' in vmostype"
+      # when: "'RedHat' in vmostype"
 
-    - name: Resultado de VirtualBox Guest
-      debug:
-        msg:
-          - "Informacion de la VirtualBox Guest"
-          - "Hostname: {{ vmname }}"
-          - "Distribucion OS: {{ vmostype }}"
-          - "Version OS: {{ vbvmcl_oswver }}"
-          - "Ambiente: {{ vbvmgt_envw.stdout }}"
-          - "Numero de CPU's: {{ vmcpu }}"
-          - "Memoria Total: {{ vmmem }}"
-          - "IP Dinamica1: {{ vbxvm_sttnet.stdout_lines[0] }}"
-          - "IP Dinamica2: {{ vbxvm_sttnet.stdout_lines[1] }}"
-      when: "'Windows' in vmostype"
+    # - name: Resultado de VirtualBox Guest
+    #   debug:
+    #     msg:
+    #       - "Informacion de la VirtualBox Guest"
+    #       - "Hostname: {{ vmname }}"
+    #       - "Distribucion OS: {{ vmostype }}"
+    #       - "Version OS: {{ vbvmcl_oswver }}"
+    #       - "Ambiente: {{ vbvmgt_envw.stdout }}"
+    #       - "Numero de CPU's: {{ vmcpu }}"
+    #       - "Memoria Total: {{ vmmem }}"
+    #       - "IP Dinamica1: {{ vbxvm_sttnet.stdout_lines[0] }}"
+    #       - "IP Dinamica2: {{ vbxvm_sttnet.stdout_lines[1] }}"
+    #   when: "'Windows' in vmostype"

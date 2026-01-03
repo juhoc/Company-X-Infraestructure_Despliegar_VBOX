@@ -1,4 +1,6 @@
 ---
+vmdftfld: /vmbox/Virtuals
+vmclnfld: /run/media/juhoc/SGTHDDX/VirtuaBoxClones
 dirdiskcwin: /home/juhoc/VirtualBox/VMs/windows
 dirdiskclnx: /home/juhoc/VirtualBox/VMs/linux
 dirdisknvmg: /home/juhoc/VirtualBox/VMs
