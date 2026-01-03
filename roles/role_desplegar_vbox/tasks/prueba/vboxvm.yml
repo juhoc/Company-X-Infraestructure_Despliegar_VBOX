@@ -27,7 +27,7 @@
       {% elif 'vd' in vmname %}
       desarrollo
       {% elif 'vo' in vmname %}
-      "liga oculta"
+      liga oculta
       {% endif %}
 
 - name: Prueba agrupando eco de recursos
