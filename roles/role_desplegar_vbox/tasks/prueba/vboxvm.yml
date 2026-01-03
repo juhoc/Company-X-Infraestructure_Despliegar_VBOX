@@ -1,20 +1,26 @@
-- name: Prueba agrupando ecos
+- name: Prueba agrupando eco de recursos
   set_fact:
-    vbvmgst_source: |
-      {% if 'small' in vbvmgst_sources %}
-      1,1
-      {% elif 'medium' in vbvmgst_sources %}
-      1,2
-      {% elif 'large' in vbvmgst_sources %}
-      2,2
-      {% elif 'xlarge' in vbvmgst_sources %}
-      2,3
+    vmsource: |
+      {% if 'small' in vmsources %}
+      1,1024,56320
+      {% elif 'medium' in vmsources %}
+      1,2048,56320
+      {% elif 'large' in vmsources %}
+      2,2048,56320
+      {% elif 'xlarge' in vmsources %}
+      2,3072,56320
       {% endif %}
 
 - name: Prueba de varibles
   debug:
     msg: 
       - "{{ idcrqinc }}"
-      - "{{ vbvmgst_name }}"
-      - "{{ vbvmgst_ostype }}"
-      - "{{ vbvmgst_source | trim }}"
+      - "{{ vmname }}"
+      - "{{ vmostype }}"
+      - "{{ vmsource | trim }}"
+
+- name: Prueba agrupando eco de recursos
+  set_fact:
+    vmcpu: "{{ vmsource.split(',')[0] }}"
+    vmmemry: "{{ vmsource.split(',')[1] }}"
+    vmdisk: "{{ vmsource.split(',')[2] }}"
