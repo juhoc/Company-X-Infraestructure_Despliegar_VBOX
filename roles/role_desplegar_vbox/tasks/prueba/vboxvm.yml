@@ -21,6 +21,6 @@
 
 - name: Prueba agrupando eco de recursos
   set_fact:
-    vmcpu: "{{ vmsource.split(',')[0] }}"
-    vmmemry: "{{ vmsource.split(',')[1] }}"
-    vmdisk: "{{ vmsource.split(',')[2] }}"
+    vmcpu: "{{ vmsource.split(',')[0] | trim }}"
+    vmmem: "{{ vmsource.split(',')[1] | trim }}"
+    vmdsk: "{{ vmsource.split(',')[2] | trim }}"
