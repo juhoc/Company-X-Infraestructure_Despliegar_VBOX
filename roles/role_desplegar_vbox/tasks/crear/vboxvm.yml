@@ -1,27 +1,7 @@
 ---
-- name: Tipo de recusos virtuales seleccionados
-  set_fact:
-    vmsource: |
-      {% if 'small' in vmsources %}
-      1,1024,56320
-      {% elif 'medium' in vmsources %}
-      1,2048,56320
-      {% elif 'large' in vmsources %}
-      2,2048,56320
-      {% elif 'xlarge' in vmsources %}
-      2,3072,56320
-      {% endif %}
-
-- name: Parsear los recursos virtuales seleccionados
-  set_fact:
-    vmcpu: "{{ vmsource.split(',')[0] | trim }}"
-    vmmem: "{{ vmsource.split(',')[1] | trim }}"
-    vmdsk: "{{ vmsource.split(',')[2] | trim }}"
-
-
 - name: Tareas por bloques - Crear de virtuales en MasterServer VirtualBox
   block:
-    - name: Creando VirtuaBox Linux
+    - name: Creando VirtuaBox {{ vmostype }}
       shell: |
         VBoxManage createvm --name {{ vmname }} --ostype {{ vmostype }} --register --basefolder {{ vmdftfld }}
         VBoxManage modifyvm {{ vmname }} --ioapic on
