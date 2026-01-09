@@ -1,9 +1,6 @@
 ---
-vmdftfld: /vmbox/Virtuals
-vmclnfld: /run/media/juhoc/SGTHDDX/VirtuaBoxClones
-dirdiskcwin: /home/juhoc/VirtualBox/VMs/windows
-dirdiskclnx: /home/juhoc/VirtualBox/VMs/linux
-dirdisknvmg: /home/juhoc/VirtualBox/VMs
+vmdstoresso: /vmbox/Virtuals
+vmdstoredsk: /vmboxs/Virtuals
 
 tower_base_url: "http://172.19.0.2:8052"
 tower_organization: "bvmorg"
