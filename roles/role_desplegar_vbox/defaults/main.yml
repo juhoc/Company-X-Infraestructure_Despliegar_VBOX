@@ -1,6 +1,7 @@
 ---
 vmdstoresso: /vmbox/Virtuals
 vmdstoredsk: /vmboxs/Virtuals
+vmdstoretpt: /vmboxs/Templates
 
 tower_base_url: "http://172.19.0.2:8052"
 tower_organization: "bvmorg"
