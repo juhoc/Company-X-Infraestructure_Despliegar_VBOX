@@ -48,3 +48,4 @@
       - "{{ vmdstoresso }}"
       - "{{ vmdstoredsk }}"
       - "{{ vmdstoretpt }}"
+      - "{{ vartest.test0 }}"
