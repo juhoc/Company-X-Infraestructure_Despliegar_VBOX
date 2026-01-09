@@ -11,16 +11,6 @@
       2,3072,56320
       {% endif %}
 
-- name: Recursos seleccionados para la creacion de la VM
-  debug:
-    msg: 
-      - "Tipo: {{ vmostype }}"
-      - "Nombre: {{ vmname }}"
-      - "Vitualizador: VirtuaBox"
-      - "Numero de CPU's: {{ vmsource.split(',')[0] | trim }}"
-      - "Cantidad de Memoria: {{ vmsource.split(',')[1] | trim }}"
-      - "Tamaño disco extra: {{ vmsource.split(',')[2] | trim }}"
-
 - name: Ambiente VM {{ vmostype }} - {{ vmname }} en VirtuaBox
   set_fact:
     vmenv: |
@@ -31,6 +21,17 @@
       {% elif 'vlo' in vmname %}
       liga oculta,lo
       {% endif %}
+
+- name: Recursos seleccionados para la creacion de la VM
+  debug:
+    msg: 
+      - "Tipo: {{ vmostype }}"
+      - "Nombre: {{ vmname }}"
+      - "Vitualizador: VirtuaBox"
+      - "Ambiente {{ vmenv.split(',')[0] | trim }}"
+      - "Numero de CPU's: {{ vmsource.split(',')[0] | trim }} "
+      - "Cantidad de Memoria: {{ vmsource.split(',')[1] | trim }} MB"
+      - "Tamaño disco extra: {{ vmsource.split(',')[2] | trim }} MB"
 
 - set_fact:
     vmcpu: "{{ vmsource.split(',')[0] | trim }}"
