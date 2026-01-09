@@ -1,4 +1,4 @@
-- name: Prueba agrupando eco de recursos
+- name: Recursos VM {{ vmostype }} - {{ vmname }} en VirtuaBox
   set_fact:
     vmsource: |
       {% if 'small' in vmsources %}
@@ -11,15 +11,17 @@
       2,3072,56320
       {% endif %}
 
-- name: Prueba de varibles 1
+- name: Recursos VM Seleccionados
   debug:
     msg: 
-      - "{{ idcrqinc }}"
-      - "{{ vmname }}"
-      - "{{ vmostype }}"
-      - "{{ vmsource | trim }}"
+      - "Tipo: {{ vmostype }}"
+      - "Nombre: {{ vmname }}"
+      - "Vitualizador: VirtuaBox"
+      - "Numero de CPU's: {{ vmsource.split(',')[0] | trim }}"
+      - "Cantidad de Memoria: {{ vmsource.split(',')[1] | trim }}"
+      - "Tamaño disco extra: {{ vmsource.split(',')[2] | trim }}"
 
-- name: Prueba agrupando eco tipo de ambiente
+- name: Ambiente VM {{ vmostype }} - {{ vmname }} en VirtuaBox
   set_fact:
     vmenv: |
       {% if 'vp' in vmname %}
@@ -30,17 +32,7 @@
       liga oculta,lo
       {% endif %}
 
-- name: Prueba agrupando eco de recursos
-  set_fact:
+- set_fact:
     vmcpu: "{{ vmsource.split(',')[0] | trim }}"
     vmmem: "{{ vmsource.split(',')[1] | trim }}"
     vmdsk: "{{ vmsource.split(',')[2] | trim }}"
-
-- name: Prueba de varibles 2
-  debug:
-    msg: 
-      - "{{ vmcpu | trim }}"
-      - "{{ vmmem | trim }}"
-      - "{{ vmdsk | trim }}"
-      - "{{ vmenv.split(',')[0] | trim }}"
-      - "{{ vmenv.split(',')[1] | trim }}"
