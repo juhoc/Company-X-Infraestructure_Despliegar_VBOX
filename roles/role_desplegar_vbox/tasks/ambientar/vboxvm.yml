@@ -11,7 +11,7 @@
       2,3072,56320
       {% endif %}
 
-- name: Recursos VM Seleccionados
+- name: Recursos seleccionados para la creacion de la VM
   debug:
     msg: 
       - "Tipo: {{ vmostype }}"
