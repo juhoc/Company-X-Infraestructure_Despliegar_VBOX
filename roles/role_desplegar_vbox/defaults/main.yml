@@ -3,10 +3,6 @@ vmdstoresso: /vmbox/Virtuals
 vmdstoredsk: /vmboxs/Virtuals
 vmdstoretpt: /vmboxs/Templates
 
-vartest:
-  test0: "RedHat8_64"
-  test1: "RedHat9_64"
-
 tower_base_url: "http://172.19.0.2:8052"
 tower_organization: "bvmorg"
 tower_inventory: "bvm_inventory"
