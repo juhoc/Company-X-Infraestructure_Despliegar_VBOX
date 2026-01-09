@@ -19,8 +19,8 @@
 - block:
     - name: Disco VM - {{ vmostype }} - {{ vmname }} en VirtuaBox
       shell: |
-        VBoxManage createhd --filename {{ vmdstoredsk }}/{{ vmname }}/vbal{{ vbvmcl_oslver }}_{{ vbvmcl_nldks }}.vdi --size {{ nwdsksz }} --format VDI
-        VBoxManage storageattach {{ vmname }} --storagectl SATA --port 1 --device 0 --type hdd --medium {{ vmdstoredsk }}/{{ vmname }}/vbal{{ vbvmcl_oslver }}_{{ vbvmcl_nldks }}.vdi
+        VBoxManage createhd --filename {{ vmdstoredsk }}/{{ vmname }}/{{ 'sd_data00' if 'RedHat' in vmostype else 'hd_data00' }}.vdi --size {{ vmdsk }} --format VDI
+        VBoxManage storageattach {{ vmname }} --storagectl SATA --port 1 --device 0 --type hdd --medium {{ vmdstoredsk }}/{{ vmname }}/{{ 'sd_data00' if 'RedHat' in vmostype else 'hd_data00' }}.vdi.vdi
       register: vbxvml_sttsd
 
       # register: vbxvml_sttos

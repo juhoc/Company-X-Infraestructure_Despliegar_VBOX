@@ -44,3 +44,4 @@
       - "{{ vmdsk | trim }}"
       - "{{ vmenv.split(',')[0] | trim }}"
       - "{{ vmenv.split(',')[1] | trim }}"
+      - "{{ 'sd_data00' if 'RedHat' in vmostype else 'hd_data00' }}"
