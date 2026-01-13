@@ -27,6 +27,34 @@
         VBoxManage storageattach {{ vmname }} --storagectl SATA --port 1 --device 0 --type hdd --medium {{ vmdstoredsk }}/{{ vmname }}/{{ 'sd_data00' if 'RedHat' in vmostype else 'hd_data00' }}.vdi
       register: vbxvml_sttsd
 
+- block:
+    - name: Iniciar Maquina VM {{ vmostype }} - {{ vmname }} en VirtuaBox
+     shell: |
+       VBoxManage startvm {{ vmname }} --type headless
+       sleep 30
+     register: vbxvm_sttup
+
+- block:
+    - name: Asignando red para la VM {{ vmostype }} - {{ vmname }} en VirtuaBox
+      shell: |
+        sleep 15
+        VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/0/V4/IP 2>/dev/null | sed 's/Value: //g'
+        VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/1/V4/IP 2>/dev/null | sed 's/Value: //g'
+      register: vmnets
+
+- name: Recursos finales de la VM {{ vmostype }} - {{ vmname }} en VirtuaBox
+  debug:
+    msg: 
+      - "Tipo: {{ vmostype }}"
+      - "Nombre: {{ vmname }}"
+      - "Vitualizador: VirtuaBox"
+      - "Ambiente {{ vmenv.split(',')[0] | trim }}"
+      - "Numero de CPU's: {{ vmsource.split(',')[0] | trim }} "
+      - "Cantidad de Memoria: {{ vmsource.split(',')[1] | trim }} MB"
+      - "Tamaño disco extra: {{ vmsource.split(',')[2] | trim }} MB"
+      - "IP Tarjeta de red0: {{ vmnets.stdout_lines[0] }}"
+      - "IP Tarjeta de red1: {{ vmnets.stdout_lines[1] }}"
+
       # register: vbxvml_sttos
       # when: "'RedHat' in vmostype"
 
