@@ -44,7 +44,8 @@
 
 - name: Recursos finales de la VM {{ vmostype }} - {{ vmname }} en VirtuaBox
   debug:
-    msg: 
+    msg:
+      - "La VM {{ vmostype }} - {{ vmname }} en VirtuaBox - Activa y con los recursos:" 
       - "Tipo: {{ vmostype }}"
       - "Nombre: {{ vmname }}"
       - "Vitualizador: VirtuaBox"
