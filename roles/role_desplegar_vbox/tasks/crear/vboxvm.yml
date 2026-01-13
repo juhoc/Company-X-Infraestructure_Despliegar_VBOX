@@ -10,9 +10,9 @@
         VBoxManage modifyvm {{ vmname }} --graphicscontroller vmsvga
         VBoxManage modifyvm {{ vmname }} --vram 16
         sleep 3
-        VBoxManage modifyvm {{ vmname }} --nic1 hostonly --hostonlyadapter1 vboxnet0
+        VBoxManage modifyvm {{ vmname }} --nic1 natnetwork --natnetwork1 vboxnat0
         sleep 3
-        VBoxManage modifyvm {{ vmname }} --nic2 natnetwork --natnetwork2 vboxnat0
+        VBoxManage modifyvm {{ vmname }} --nic2 hostonly --hostonlyadapter2 vboxnet0
         VBoxManage storagectl {{ vmname }} --name "IDE Controller" --add ide
         VBoxManage storageattach {{ vmname }} --storagectl "IDE Controller" --port 0 --device 1 --type dvddrive --medium emptydrive
         VBoxManage storagectl {{ vmname }} --name SATA --add sata --controller IntelAHCI --portcount 10
@@ -29,10 +29,10 @@
 
 - block:
     - name: Iniciar Maquina VM {{ vmostype }} - {{ vmname }} en VirtuaBox
-     shell: |
-       VBoxManage startvm {{ vmname }} --type headless
-       sleep 30
-     register: vbxvm_sttup
+      shell: |
+        VBoxManage startvm {{ vmname }} --type headless
+        sleep 30
+      register: vbxvm_sttup
 
 - block:
     - name: Asignando red para la VM {{ vmostype }} - {{ vmname }} en VirtuaBox
