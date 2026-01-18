@@ -48,7 +48,6 @@
       - "{{ vmdstoresso }}"
       - "{{ vmdstoredsk }}"
       - "{{ vmdstoretpt }}"
-      - "{{ vartest.test0 }}"
 
 - name: Prueba de ejecucio shell con recursos
   shell: |
