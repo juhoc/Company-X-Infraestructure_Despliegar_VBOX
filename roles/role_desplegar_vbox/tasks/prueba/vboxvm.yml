@@ -49,3 +49,21 @@
       - "{{ vmdstoredsk }}"
       - "{{ vmdstoretpt }}"
       - "{{ vartest.test0 }}"
+
+- name: Prueba de ejecucio shell con recursos
+  shell: |
+      {% if 'Tarjeta_puente_internet' in vmnet %}
+      echo "Tarjeta_puente_internet"
+      {% elif 'Tarjeta_aislada_sin_internete' in vmnet %}
+      echo "Tarjeta_aislada_sin_internete"
+      {% elif 'Tarjeta_nat_internet_aislada' in vmnet %}
+      echo "Tarjeta_nat_internet_aislada"
+      {% elif 'Tarjetas_puente_aislada' in vmnet %}
+      echo "Tarjetas_puente_aislada"
+      {% elif 'Tarjetas_aislada_puente' in vmnet %}
+      echo "Tarjetas_aislada_puente"
+      {% elif 'Tarjetas_nat_aislada' in vmnet %}
+      echo "Tarjetas_nat_aislada"
+      {% elif 'Tarjetas_aislada_nat' in vmnet %}
+      echo "Tarjetas_aislada_nat"
+      {% endif %}
