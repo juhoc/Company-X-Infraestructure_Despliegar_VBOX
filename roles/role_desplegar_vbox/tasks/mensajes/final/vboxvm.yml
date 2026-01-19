@@ -10,8 +10,8 @@
           - "Cantidad de Memoria: {{ vmsource.split(',')[1] | trim }}GB"
           - "Tamaño disco extra: {{ vmsource.split(',')[2] | trim }}GB"
             {% if 'Tarjeta' in vmnets %}
-          - "IP Tarjeta de red0: {{ vmnets.stdout_lines[0] }}"
+          - "IP Tarjeta de red0: {{ vmoutputnetval.stdout_lines[0] }}"
             {% elif 'Tarjetas' in vmnets %}
-          - "IP Tarjeta de red0: {{ vmnets.stdout_lines[0] }}"
-          - "IP Tarjeta de red1: {{ vmnets.stdout_lines[1] }}"
+          - "IP Tarjeta de red0: {{ vmoutputnetval.stdout_lines[0] }}"
+          - "IP Tarjeta de red1: {{ vmoutputnetval.stdout_lines[1] }}"
             {% endif %}
