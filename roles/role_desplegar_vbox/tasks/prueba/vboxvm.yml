@@ -40,7 +40,7 @@
   debug:
     msg: 
       - "{{ vmcpu | trim }}"
-      - "{{ vmmem | int * 1025 }}"
+      - "{{ vmmem | int * 1024 }}"
       - "{{ vmdsk | int * 1025 }}"
       - "{{ vmenv.split(',')[0] | trim }}"
       - "{{ vmenv.split(',')[1] | trim }}"

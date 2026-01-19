@@ -2,11 +2,10 @@
     - name: Recursos iniciales de la VM {{ vmostype }} - {{ vmname }} en VirtuaBox
       debug:
         msg:
-          - "La VM {{ vmostype }} - {{ vmname }} en VirtuaBox - Activa y con los recursos:" 
           - "Tipo: {{ vmostype }}"
           - "Nombre: {{ vmname }}"
           - "Vitualizador: VirtuaBox"
           - "Ambiente {{ vmenv.split(',')[0] | trim }}"
           - "Numero de CPU's: {{ vmsource.split(',')[0] | trim }} "
-          - "Cantidad de Memoria: {{ vmsource.split(',')[1] | trim }} MB"
-          - "Tamaño disco extra: {{ vmsource.split(',')[2] | trim }} MB"
+          - "Cantidad de Memoria: {{ vmsource.split(',')[1] | int * 1024 }} GB"
+          - "Tamaño disco extra: {{ vmsource.split(',')[2] | int * 1024 }} GB"
