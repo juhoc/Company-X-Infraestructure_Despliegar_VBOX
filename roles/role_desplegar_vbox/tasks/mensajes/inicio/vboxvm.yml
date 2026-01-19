@@ -7,5 +7,5 @@
           - "Vitualizador: VirtuaBox"
           - "Ambiente {{ vmenv.split(',')[0] | trim }}"
           - "Numero de CPU's: {{ vmsource.split(',')[0] | trim }} "
-          - "Cantidad de Memoria: {{ vmsource.split(',')[1] | int * 1024 }} GB"
-          - "Tamaño disco extra: {{ vmsource.split(',')[2] | int * 1024 }} GB"
+          - "Cantidad de Memoria: {{ vmsource.split(',')[1] | trim }} GB"
+          - "Tamaño disco extra: {{ vmsource.split(',')[2] | trim }} GB"
