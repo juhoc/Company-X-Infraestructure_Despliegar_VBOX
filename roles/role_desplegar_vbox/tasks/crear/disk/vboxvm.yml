@@ -2,22 +2,9 @@
 - block:
     - name: Creando VM {{ vmostype }} - {{ vmname }} en VirtuaBox
       shell: |
-        VBoxManage createvm --name {{ vmname }} --ostype {{ vmostype }} --register --basefolder {{ vmdstoresso }}
-        VBoxManage modifyvm {{ vmname }} --ioapic on
-        VBoxManage modifyvm {{ vmname }} --cpus {{ vmcpu }}
-        VBoxManage modifyvm {{ vmname }} --audio none
-        VBoxManage modifyvm {{ vmname }} --memory {{ vmmem }}
-        VBoxManage modifyvm {{ vmname }} --graphicscontroller vmsvga
-        VBoxManage modifyvm {{ vmname }} --vram 16
-        sleep 3
-        VBoxManage modifyvm {{ vmname }} --nic1 natnetwork --natnetwork1 vboxnat0
-        sleep 3
-        VBoxManage modifyvm {{ vmname }} --nic2 hostonly --hostonlyadapter2 vboxnet0
         VBoxManage storagectl {{ vmname }} --name "IDE Controller" --add ide
         VBoxManage storageattach {{ vmname }} --storagectl "IDE Controller" --port 0 --device 1 --type dvddrive --medium emptydrive
         VBoxManage storagectl {{ vmname }} --name SATA --add sata --controller IntelAHCI --portcount 10
-        VBoxManage clonemedium {{ vmdstoretpt }}/{{ vmostype }}.vdi {{ vmdstoresso }}/{{ vmname }}/{{ 'sd_system00' if 'RedHat' in vmostype else 'hd_system00' }}.vdi --format VDI
-        VBoxManage storageattach {{ vmname }} --storagectl SATA --port 0 --device 0 --type hdd --medium {{ vmdstoresso }}/{{ vmname }}/{{ 'sd_system00' if 'RedHat' in vmostype else 'hd_system00' }}.vdi
       register: vbxvml_sttos
 
 - block:

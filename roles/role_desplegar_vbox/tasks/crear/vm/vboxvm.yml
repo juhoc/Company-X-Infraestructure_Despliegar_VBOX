@@ -1,60 +1,53 @@
 ---
 - block:
-    - name: Creando VM {{ vmostype }} - {{ vmname }} en VirtuaBox
+    - name: Crear recursos VM de {{ vmostype }} - {{ vmname }} en VirtuaBox.
       shell: |
         VBoxManage createvm --name {{ vmname }} --ostype {{ vmostype }} --register --basefolder {{ vmdstoresso }}
         VBoxManage modifyvm {{ vmname }} --ioapic on
         VBoxManage modifyvm {{ vmname }} --cpus {{ vmcpu }}
-        VBoxManage modifyvm {{ vmname }} --audio none
+        VBoxManage modifyvm {{ vmname }} --audio-enabled off
         VBoxManage modifyvm {{ vmname }} --memory {{ vmmem }}
         VBoxManage modifyvm {{ vmname }} --graphicscontroller vmsvga
         VBoxManage modifyvm {{ vmname }} --vram 16
-        sleep 3
-        VBoxManage modifyvm {{ vmname }} --nic1 natnetwork --natnetwork1 vboxnat0
-        sleep 3
-        VBoxManage modifyvm {{ vmname }} --nic2 hostonly --hostonlyadapter2 vboxnet0
         VBoxManage storagectl {{ vmname }} --name "IDE Controller" --add ide
         VBoxManage storageattach {{ vmname }} --storagectl "IDE Controller" --port 0 --device 1 --type dvddrive --medium emptydrive
         VBoxManage storagectl {{ vmname }} --name SATA --add sata --controller IntelAHCI --portcount 10
-        VBoxManage clonemedium {{ vmdstoretpt }}/{{ vmostype }}.vdi {{ vmdstoresso }}/{{ vmname }}/{{ 'sd_system00' if 'RedHat' in vmostype else 'hd_system00' }}.vdi --format VDI
-        VBoxManage storageattach {{ vmname }} --storagectl SATA --port 0 --device 0 --type hdd --medium {{ vmdstoresso }}/{{ vmname }}/{{ 'sd_system00' if 'RedHat' in vmostype else 'hd_system00' }}.vdi
-      register: vbxvml_sttos
 
-- block:
-    - name: Disco VM - {{ vmostype }} - {{ vmname }} en VirtuaBox
-      shell: |
-        VBoxManage createhd --filename {{ vmdstoredsk }}/{{ vmname }}/{{ 'sd_data00' if 'RedHat' in vmostype else 'hd_data00' }}.vdi --size {{ vmdsk }} --format VDI
-        VBoxManage storageattach {{ vmname }} --storagectl SATA --port 1 --device 0 --type hdd --medium {{ vmdstoredsk }}/{{ vmname }}/{{ 'sd_data00' if 'RedHat' in vmostype else 'hd_data00' }}.vdi
-      register: vbxvml_sttsd
+# - block:
+#     - name: Disco VM - {{ vmostype }} - {{ vmname }} en VirtuaBox
+#       shell: |
+#         VBoxManage createhd --filename {{ vmdstoredsk }}/{{ vmname }}/{{ 'sd_data00' if 'RedHat' in vmostype else 'hd_data00' }}.vdi --size {{ vmdsk }} --format VDI
+#         VBoxManage storageattach {{ vmname }} --storagectl SATA --port 1 --device 0 --type hdd --medium {{ vmdstoredsk }}/{{ vmname }}/{{ 'sd_data00' if 'RedHat' in vmostype else 'hd_data00' }}.vdi
+#       register: vbxvml_sttsd
 
-- block:
-    - name: Iniciar Maquina VM {{ vmostype }} - {{ vmname }} en VirtuaBox
-      shell: |
-        VBoxManage startvm {{ vmname }} --type headless
-        sleep 30
-      register: vbxvm_sttup
+# - block:
+#     - name: Iniciar Maquina VM {{ vmostype }} - {{ vmname }} en VirtuaBox
+#       shell: |
+#         VBoxManage startvm {{ vmname }} --type headless
+#         sleep 30
+#       register: vbxvm_sttup
 
-- block:
-    - name: Asignando red para la VM {{ vmostype }} - {{ vmname }} en VirtuaBox
-      shell: |
-        sleep 15
-        VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/0/V4/IP 2>/dev/null | sed 's/Value: //g'
-        VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/1/V4/IP 2>/dev/null | sed 's/Value: //g'
-      register: vmnets
+# - block:
+#     - name: Asignando red para la VM {{ vmostype }} - {{ vmname }} en VirtuaBox
+#       shell: |
+#         sleep 15
+#         VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/0/V4/IP 2>/dev/null | sed 's/Value: //g'
+#         VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/1/V4/IP 2>/dev/null | sed 's/Value: //g'
+#       register: vmnets
 
-- name: Recursos finales de la VM {{ vmostype }} - {{ vmname }} en VirtuaBox
-  debug:
-    msg:
-      - "La VM {{ vmostype }} - {{ vmname }} en VirtuaBox - Activa y con los recursos:" 
-      - "Tipo: {{ vmostype }}"
-      - "Nombre: {{ vmname }}"
-      - "Vitualizador: VirtuaBox"
-      - "Ambiente {{ vmenv.split(',')[0] | trim }}"
-      - "Numero de CPU's: {{ vmsource.split(',')[0] | trim }} "
-      - "Cantidad de Memoria: {{ vmsource.split(',')[1] | trim }} MB"
-      - "Tamaño disco extra: {{ vmsource.split(',')[2] | trim }} MB"
-      - "IP Tarjeta de red0: {{ vmnets.stdout_lines[0] }}"
-      - "IP Tarjeta de red1: {{ vmnets.stdout_lines[1] }}"
+# - name: Recursos finales de la VM {{ vmostype }} - {{ vmname }} en VirtuaBox
+#   debug:
+#     msg:
+#       - "La VM {{ vmostype }} - {{ vmname }} en VirtuaBox - Activa y con los recursos:" 
+#       - "Tipo: {{ vmostype }}"
+#       - "Nombre: {{ vmname }}"
+#       - "Vitualizador: VirtuaBox"
+#       - "Ambiente {{ vmenv.split(',')[0] | trim }}"
+#       - "Numero de CPU's: {{ vmsource.split(',')[0] | trim }} "
+#       - "Cantidad de Memoria: {{ vmsource.split(',')[1] | trim }} MB"
+#       - "Tamaño disco extra: {{ vmsource.split(',')[2] | trim }} MB"
+#       - "IP Tarjeta de red0: {{ vmnets.stdout_lines[0] }}"
+#       - "IP Tarjeta de red1: {{ vmnets.stdout_lines[1] }}"
 
       # register: vbxvml_sttos
       # when: "'RedHat' in vmostype"
