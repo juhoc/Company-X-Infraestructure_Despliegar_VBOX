@@ -35,5 +35,5 @@
 
 - set_fact:
     vmcpu: "{{ vmsource.split(',')[0] | trim }}"
-    vmmem: "{{ vmsource.split(',')[1] | trim }}"
-    vmdsk: "{{ vmsource.split(',')[2] | trim }}"
+    vmmem: "{{ vmsource.split(',')[1] | int * 1024 }}"
+    vmdsk: "{{ vmsource.split(',')[2] | int * 1024 }}"
