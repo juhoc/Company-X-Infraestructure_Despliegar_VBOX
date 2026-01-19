@@ -40,8 +40,8 @@
   debug:
     msg: 
       - "{{ vmcpu | trim }}"
-      - "{{ vmmem | int * 1025 | trim }}"
-      - "{{ vmdsk | int * 1025 | trim }}"
+      - "{{ vmmem | int * 1025 }}"
+      - "{{ vmdsk | int * 1025 }}"
       - "{{ vmenv.split(',')[0] | trim }}"
       - "{{ vmenv.split(',')[1] | trim }}"
       - "{{ 'sd_data00' if 'RedHat' in vmostype else 'hd_data00' }}"
