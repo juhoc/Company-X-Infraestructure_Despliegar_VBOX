@@ -5,3 +5,13 @@
         VBoxManage startvm {{ vmname }} --type headless
         sleep 30
       register: vbxvm_sttup
+
+    - set_fact:
+        run_playbook: |
+          ['mensajes/final/vboxvm']
+    
+    - name: Inicia tareas {{ run_playbook }}
+      include_tasks: "{{ tareas_a }}.yml"
+      loop: "{{ run_playbook }}"
+      loop_control:
+        loop_var: tareas_a
