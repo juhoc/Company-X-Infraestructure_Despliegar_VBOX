@@ -30,8 +30,8 @@
       - "Vitualizador: VirtuaBox"
       - "Ambiente {{ vmenv.split(',')[0] | trim }}"
       - "Numero de CPU's: {{ vmsource.split(',')[0] | trim }} "
-      - "Cantidad de Memoria: {{ vmsource.split(',')[1] int | * 1024 | trim }} MB"
-      - "Tamaño disco extra: {{ vmsource.split(',')[2] | trim }} MB"
+      - "Cantidad de Memoria: {{ vmsource.split(',')[1] | int * 1024 | trim }} MB"
+      - "Tamaño disco extra: {{ vmsource.split(',')[2] | int * 1024 | trim }} MB"
 
 - set_fact:
     vmcpu: "{{ vmsource.split(',')[0] | trim }}"
