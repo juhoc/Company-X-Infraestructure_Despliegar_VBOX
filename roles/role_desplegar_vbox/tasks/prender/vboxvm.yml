@@ -8,7 +8,7 @@
 
     - set_fact:
         run_playbook: |
-          ['validar/redes/vboxvm',mensajes/final/vboxvm']
+          ['validar/redes/vboxvm','mensajes/final/vboxvm']
     
     - name: Inicia tareas {{ run_playbook }}
       include_tasks: "{{ tareas_a }}.yml"
