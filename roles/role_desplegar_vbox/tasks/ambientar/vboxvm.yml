@@ -22,13 +22,13 @@
       liga oculta,lo
       {% endif %}
 
-- name: Recursos seleccionados para la creacion de la VM
-  debug:
-    msg:
-      - "Tipo: {{ vmostype }}"
-      - "Nombre: {{ vmname }}"
-      - "Vitualizador: VirtuaBox"
-      - "Ambiente {{ vmenv.split(',')[0] | trim }}"
+# - name: Recursos seleccionados para la creacion de la VM
+#   debug:
+#     msg:
+#       - "Tipo: {{ vmostype }}"
+#       - "Nombre: {{ vmname }}"
+#       - "Vitualizador: VirtuaBox"
+#       - "Ambiente {{ vmenv.split(',')[0] | trim }}"
       - "Numero de CPU's: {{ vmsource.split(',')[0] | trim }} "
       # - "Cantidad de Memoria: {{ vmsource.split(',')[1] | int * 1024 | trim }} MB"
       # - "Tamaño disco extra: {{ vmsource.split(',')[2] | int * 1024 | trim }} MB"
