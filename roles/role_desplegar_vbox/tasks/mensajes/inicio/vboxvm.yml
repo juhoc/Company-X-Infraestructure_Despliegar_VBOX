@@ -1,5 +1,5 @@
 - block:
-    - name: Recursos finales de la VM {{ vmostype }} - {{ vmname }} en VirtuaBox
+    - name: Recursos iniciales de la VM {{ vmostype }} - {{ vmname }} en VirtuaBox
       debug:
         msg:
           - "La VM {{ vmostype }} - {{ vmname }} en VirtuaBox - Activa y con los recursos:" 
