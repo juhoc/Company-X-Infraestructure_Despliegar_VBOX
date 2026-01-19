@@ -2,13 +2,13 @@
   set_fact:
     vmsource: |
       {% if 'small' in vmsources %}
-      1,1024,56320
+      1,1,55
       {% elif 'medium' in vmsources %}
-      1,2048,56320
+      1,2,55
       {% elif 'large' in vmsources %}
-      2,2048,56320
+      2,2,55
       {% elif 'xlarge' in vmsources %}
-      2,3072,56320
+      2,3,55
       {% endif %}
 
 - name: Prueba de varibles 1
@@ -40,8 +40,8 @@
   debug:
     msg: 
       - "{{ vmcpu | trim }}"
-      - "{{ vmmem | trim }}"
-      - "{{ vmdsk | trim }}"
+      - "{{ vmmem | int * 1025 | trim }}"
+      - "{{ vmdsk | int * 1025 | trim }}"
       - "{{ vmenv.split(',')[0] | trim }}"
       - "{{ vmenv.split(',')[1] | trim }}"
       - "{{ 'sd_data00' if 'RedHat' in vmostype else 'hd_data00' }}"
