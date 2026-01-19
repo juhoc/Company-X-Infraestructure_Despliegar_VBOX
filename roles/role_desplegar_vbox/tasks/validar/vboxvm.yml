@@ -1,0 +1,30 @@
+- block:
+    - name: Validar Red VM {{ vmostype }} - {{ vmname }} en VirtuaBox.
+      shell: |
+          {% if 'Tarjeta_puente_internet' in vmnets %}
+            sleep 15
+            VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/0/V4/IP 2>/dev/null | sed 's/Value: //g'
+          {% elif 'Tarjeta_aislada_sin_internete' in vmnets %}
+            sleep 15
+            VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/0/V4/IP 2>/dev/null | sed 's/Value: //g'
+          {% elif 'Tarjeta_nat_internet_aislada' in vmnets %}
+            sleep 15
+            VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/0/V4/IP 2>/dev/null | sed 's/Value: //g'
+          {% elif 'Tarjetas_puente_aislada' in vmnets %}
+            sleep 15
+            VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/0/V4/IP 2>/dev/null | sed 's/Value: //g'
+            VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/1/V4/IP 2>/dev/null | sed 's/Value: //g'
+          {% elif 'Tarjetas_aislada_puente' in vmnets %}
+            sleep 15
+            VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/0/V4/IP 2>/dev/null | sed 's/Value: //g'
+            VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/1/V4/IP 2>/dev/null | sed 's/Value: //g'
+          {% elif 'Tarjetas_nat_aislada' in vmnets %}
+            sleep 15
+            VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/0/V4/IP 2>/dev/null | sed 's/Value: //g'
+            VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/1/V4/IP 2>/dev/null | sed 's/Value: //g'
+          {% elif 'Tarjetas_aislada_nat' in vmnets %}
+            sleep 15
+            VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/0/V4/IP 2>/dev/null | sed 's/Value: //g'
+            VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/1/V4/IP 2>/dev/null | sed 's/Value: //g'
+          {% endif %}
+      register: vmoutputnetval

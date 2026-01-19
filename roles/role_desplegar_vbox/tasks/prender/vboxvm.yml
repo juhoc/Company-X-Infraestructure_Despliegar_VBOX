@@ -1,0 +1,7 @@
+---
+- block:
+    - name: Iniciar Maquina VM {{ vmostype }} - {{ vmname }} en VirtuaBox
+      shell: |
+        VBoxManage startvm {{ vmname }} --type headless
+        sleep 30
+      register: vbxvm_sttup
