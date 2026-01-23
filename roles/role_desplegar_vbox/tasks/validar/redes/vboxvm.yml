@@ -1,10 +1,15 @@
+---
+- block:
+    - set_fact:
+        vmnet: "{{ vmnets.split('_')[0] }}"
+
 - block:
     - name: Validar Red VM {{ vmostype }} - {{ vmname }} en VirtuaBox.
       shell: |
-          {% if 'Tarjeta' in vmnets %}
+          {% if 'Tarjeta' in vmnet %}
           sleep 15
           VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/0/V4/IP 2>/dev/null | sed 's/Value: //g'
-          {% elif 'Tarjetas' in vmnets %}
+          {% elif 'Tarjetas' in vmnet %}
           sleep 15
           VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/0/V4/IP 2>/dev/null | sed 's/Value: //g'
           sleep 15
