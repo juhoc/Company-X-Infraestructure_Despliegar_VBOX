@@ -6,9 +6,14 @@
         sleep 30
       register: vbxvm_sttup
 
+- block:
     - set_fact:
         run_playbook: |
+          {% if vmnet == 'Tarjeta' %}
+          ['validar/red/vboxvm','mensajes/final/vboxvm']
+          {% elif vmnet== 'Tarjetas' %}
           ['validar/redes/vboxvm','mensajes/final/vboxvm']
+          {% endif %}
     
     - name: Inicia tareas {{ run_playbook }}
       include_tasks: "{{ tareas_a }}.yml"

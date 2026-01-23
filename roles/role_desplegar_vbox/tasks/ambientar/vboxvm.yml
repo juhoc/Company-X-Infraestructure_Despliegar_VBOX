@@ -26,3 +26,4 @@
     vmcpu: "{{ vmsource.split(',')[0] | trim }}"
     vmmem: "{{ vmsource.split(',')[1] | int * 1024 }}"
     vmdsk: "{{ vmsource.split(',')[2] | int * 1024 }}"
+    vmnet: "{{ vmnets.split('_')[0] }}"
