@@ -2,11 +2,12 @@
     - name: Validar Red VM {{ vmostype }} - {{ vmname }} en VirtuaBox.
       shell: |
           {% if 'Tarjeta' in vmnets %}
-            sleep 15
-            VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/0/V4/IP 2>/dev/null | sed 's/Value: //g'
+          sleep 15
+          VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/0/V4/IP 2>/dev/null | sed 's/Value: //g'
           {% elif 'Tarjetas' in vmnets %}
-            sleep 15
-            VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/0/V4/IP 2>/dev/null | sed 's/Value: //g'
-            VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/1/V4/IP 2>/dev/null | sed 's/Value: //g'
+          sleep 15
+          VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/0/V4/IP 2>/dev/null | sed 's/Value: //g'
+          sleep 15
+          VBoxManage guestproperty get {{ vmname }} /VirtualBox/GuestInfo/Net/1/V4/IP 2>/dev/null | sed 's/Value: //g'
           {% endif %}
       register: vmoutputnetval
