@@ -20,5 +20,8 @@
           {% elif 'Tarjetas_aislada_nat' in vmnets %}
             VBoxManage modifyvm {{ vmname }} --nic1 hostonly --hostonlyadapter1 vboxnet0
             VBoxManage modifyvm {{ vmname }} --nic2 natnetwork --natnetwork1 vboxnat0
+          {% elif 'Tarjetas_aislada_aislada' in vmnets %}
+            VBoxManage modifyvm {{ vmname }} --nic1 hostonly --hostonlyadapter1 vboxnet1
+            VBoxManage modifyvm {{ vmname }} --nic2 hostonly --hostonlyadapter2 vboxnet2
           {% endif %}
       register: vmoutputnetadd
