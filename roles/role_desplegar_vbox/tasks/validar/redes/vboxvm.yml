@@ -14,4 +14,4 @@
 
 - name: depura descubre ips
   debug:
-    msg: "{{ vmoutputnetval.results }}"
+    msg: "{{ vmnets }}"
