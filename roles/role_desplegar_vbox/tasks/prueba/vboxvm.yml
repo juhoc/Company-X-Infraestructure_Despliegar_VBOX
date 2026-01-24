@@ -18,6 +18,7 @@
       - "{{ vmname }}"
       - "{{ vmostype }}"
       - "{{ vmsource | trim }}"
+      - "{{ vmnets | trim }}"
 
 - name: Prueba 1 agrupando eco tipo de ambiente
   set_fact:
