@@ -35,6 +35,7 @@
     vmcpu: "{{ vmsource.split(',')[0] | trim }}"
     vmmem: "{{ vmsource.split(',')[1] | trim }}"
     vmdsk: "{{ vmsource.split(',')[2] | trim }}"
+    vmnet: "{{ vmnets.split('_')[0] }}"
 
 - name: Prueba 1 de varibles 2
   debug:
@@ -48,6 +49,7 @@
       - "{{ vmdstoresso }}"
       - "{{ vmdstoredsk }}"
       - "{{ vmdstoretpt }}"
+      - "{{ vmnet }}"
 
 - name: Prueba 4 de ejecucio shell con recursos
   shell: |
