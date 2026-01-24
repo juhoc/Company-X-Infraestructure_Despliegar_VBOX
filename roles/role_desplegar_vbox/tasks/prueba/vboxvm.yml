@@ -1,4 +1,4 @@
-- name: Prueba agrupando eco de recursos
+- name: Prueba 1 agrupando eco de recursos
   set_fact:
     vmsource: |
       {% if 'small' in vmsources %}
@@ -11,7 +11,7 @@
       2,3,55
       {% endif %}
 
-- name: Prueba de varibles 1
+- name: Prueba 2 de varibles 1
   debug:
     msg: 
       - "{{ idcrqinc }}"
@@ -19,7 +19,7 @@
       - "{{ vmostype }}"
       - "{{ vmsource | trim }}"
 
-- name: Prueba agrupando eco tipo de ambiente
+- name: Prueba 1 agrupando eco tipo de ambiente
   set_fact:
     vmenv: |
       {% if 'vp' in vmname %}
@@ -30,13 +30,13 @@
       liga oculta,lo
       {% endif %}
 
-- name: Prueba agrupando eco de recursos
+- name: Prueba 3 agrupando eco de recursos
   set_fact:
     vmcpu: "{{ vmsource.split(',')[0] | trim }}"
     vmmem: "{{ vmsource.split(',')[1] | trim }}"
     vmdsk: "{{ vmsource.split(',')[2] | trim }}"
 
-- name: Prueba de varibles 2
+- name: Prueba 1 de varibles 2
   debug:
     msg: 
       - "{{ vmcpu | trim }}"
@@ -49,7 +49,25 @@
       - "{{ vmdstoredsk }}"
       - "{{ vmdstoretpt }}"
 
-- name: Prueba de ejecucio shell con recursos
+- name: Prueba 4 de ejecucio shell con recursos
+  shell: |
+      {% if 'Tarjeta_puente_internet' in vmnets %}
+      echo "Tarjeta_puente_internet"
+      {% elif 'Tarjeta_aislada_sin_internete' in vmnets %}
+      echo "Tarjeta_aislada_sin_internete"
+      {% elif 'Tarjeta_nat_internet_aislada' in vmnets %}
+      echo "Tarjeta_nat_internet_aislada"
+      {% elif 'Tarjetas_puente_aislada' in vmnets %}
+      echo "Tarjetas_puente_aislada"
+      {% elif 'Tarjetas_aislada_puente' in vmnets %}
+      echo "Tarjetas_aislada_puente"
+      {% elif 'Tarjetas_nat_aislada' in vmnets %}
+      echo "Tarjetas_nat_aislada"
+      {% elif 'Tarjetas_aislada_nat' in vmnets %}
+      echo "Tarjetas_aislada_nat"
+      {% endif %}
+
+- name: Prueba 5 de ejecucio shell con recursos 
   shell: |
       {% if 'Tarjeta_puente_internet' in vmnets %}
       echo "Tarjeta_puente_internet"

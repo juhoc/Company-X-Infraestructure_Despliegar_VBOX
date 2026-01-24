@@ -1,4 +1,4 @@
----
+¡---
 - block:
     - name: Iniciar Maquina VM {{ vmostype }} - {{ vmname }} en VirtuaBox
       shell: |
