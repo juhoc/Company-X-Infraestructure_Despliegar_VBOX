@@ -37,7 +37,7 @@
     vmdsk: "{{ vmsource.split(',')[2] | trim }}"
     vmnet: "{{ vmnets.split('_')[0] }}"
 
-- name: Prueba 1 de varibles 2
+- name: Prueba 4 de varibles 2
   debug:
     msg: 
       - "{{ vmcpu | trim }}"
@@ -51,7 +51,7 @@
       - "{{ vmdstoretpt }}"
       - "{{ vmnet }}"
 
-- name: Prueba 4 de ejecucio shell con recursos
+- name: Prueba 5 de ejecucio shell con recursos
   shell: |
       {% if 'Tarjeta_puente_internet' in vmnets %}
       echo "Tarjeta_puente_internet"
@@ -69,7 +69,7 @@
       echo "Tarjetas_aislada_nat"
       {% endif %}
 
-- name: Prueba 5 de ejecucio shell con recursos 
+- name: Prueba 6 de ejecucio shell con recursos 
   shell: |
       {% if 'Tarjeta' == vmnet %}
       echo "Tarjeta_numero_0"
