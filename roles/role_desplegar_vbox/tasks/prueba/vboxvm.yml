@@ -71,18 +71,9 @@
 
 - name: Prueba 5 de ejecucio shell con recursos 
   shell: |
-      {% if 'Tarjeta_puente_internet' in vmnets %}
-      echo "Tarjeta_puente_internet"
-      {% elif 'Tarjeta_aislada_sin_internete' in vmnets %}
-      echo "Tarjeta_aislada_sin_internete"
-      {% elif 'Tarjeta_nat_internet_aislada' in vmnets %}
-      echo "Tarjeta_nat_internet_aislada"
-      {% elif 'Tarjetas_puente_aislada' in vmnets %}
-      echo "Tarjetas_puente_aislada"
-      {% elif 'Tarjetas_aislada_puente' in vmnets %}
-      echo "Tarjetas_aislada_puente"
-      {% elif 'Tarjetas_nat_aislada' in vmnets %}
-      echo "Tarjetas_nat_aislada"
-      {% elif 'Tarjetas_aislada_nat' in vmnets %}
-      echo "Tarjetas_aislada_nat"
+      {% if 'Tarjeta' == vmnet %}
+      echo "Tarjeta_numero_0"
+      {% else %}
+      echo "Tarjeta_numero_0"
+      echo "Tarjeta_numero_1"
       {% endif %}
