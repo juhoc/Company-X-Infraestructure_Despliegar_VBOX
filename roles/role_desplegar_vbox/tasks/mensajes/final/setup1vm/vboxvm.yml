@@ -1,0 +1,12 @@
+- block:
+    - name: Recursos finales de la VM {{ vmostype }} - {{ vmname }} en VirtuaBox
+      debug:
+        msg:
+          - "Tipo: {{ vmostype }}"
+          - "Nombre: {{ vmname }}"
+          - "Vitualizador: VirtuaBox"
+          - "Ambiente: {{ vmenv.split(',')[0] | trim }}"
+          - "Numero de CPU's: {{ vmsource.split(',')[0] | trim }}"
+          - "Cantidad de Memoria: {{ vmsource.split(',')[1] | trim }}GB"
+          - "Tamaño disco extra: {{ vmsource.split(',')[2] | trim }}GB"
+          - "IP Dinamica1: {{ vmoutputnetval.stdout_lines[0] }}"

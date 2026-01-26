@@ -1,25 +1,15 @@
 ---
 - block:
-    - name: Recursos finales de la VM {{ vmostype }} - {{ vmname }} en VirtuaBox
-      debug:
-        msg: |
-          {% if 'Tarjeta' == vmnet %}
-          - "Tipo: {{ vmostype }}"
-          - "Nombre: {{ vmname }}"
-          - "Vitualizador: VirtuaBox"
-          - "Ambiente: {{ vmenv.split(',')[0] | trim }}"
-          - "Numero de CPU's: {{ vmsource.split(',')[0] | trim }}"
-          - "Cantidad de Memoria: {{ vmsource.split(',')[1] | trim }}GB"
-          - "Tamaño disco extra: {{ vmsource.split(',')[2] | trim }}GB
-          - "IP Dinamica1: {{ vmoutputnetval.stdout_lines[0] }}"
+    - set_fact:
+        run_playbook: |
+          {% if vmnet == 'Tarjeta' %}
+          ['mensajes/final/setup1vm/vboxvm']
           {% else %}
-          - "Tipo: {{ vmostype }}"
-          - "Nombre: {{ vmname }}"
-          - "Vitualizador: VirtuaBox"
-          - "Ambiente: {{ vmenv.split(',')[0] | trim }}"
-          - "Numero de CPU's: {{ vmsource.split(',')[0] | trim }}"
-          - "Cantidad de Memoria: {{ vmsource.split(',')[1] | trim }}GB"
-          - "Tamaño disco extra: {{ vmsource.split(',')[2] | trim }}GB
-          - "IP Dinamica1: {{ vmoutputnetval.stdout_lines[0] }}"
-          - "IP Dinamica2: {{ vmoutputnetval.stdout_lines[1] }}"
+          ['mensajes/final/setup2vm/vboxvm']
           {% endif %}
+
+- name: Inicia tareas {{ run_playbook }}
+  include_tasks: "{{ tareas_b }}.yml"
+  loop: "{{ run_playbook }}"
+  loop_control:
+    loop_var: tareas_b
