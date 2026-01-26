@@ -83,7 +83,7 @@
 
 - name: Prueba 6 de mensaje con condicion
   debug:
-    msg: 
+    msg: |
       {% if 'Tarjeta' == vmnet %}
       - "Una Tarjeta"
       {% else %}
