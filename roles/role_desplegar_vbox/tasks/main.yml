@@ -17,15 +17,15 @@
 
 - set_fact:
     run_playbook: |
-      {% if tarea == 'Crear_VM_Linux' %}
+      {% if tarea == 'Crear_VitualBox_Machine' %}
       ['ambientar/vboxvm','mensajes/inicio/vboxvm','crear/vm/vboxvm','crear/clone/vboxvm','crear/disk/vboxvm','crear/net/vboxvm','prender/vboxvm','validar/vboxvm','mensajes/final/vboxvm']
-      {% elif tarea == 'Desconectar_VM' %}
-      ['ambientar/vboxvm','desconectar/vboxvm']
-      {% elif tarea == 'Conectar_VM' %}
+      {% elif tarea == 'Desconectar_VitualBox_Machine' %}
+      ['ambientar/vboxvm','desconectar/ney/vboxvm']
+      {% elif tarea == 'Conectar_VitualBox_Machine' %}
       ['ambientar/vboxvm','conectar/vboxvm']
-      {% elif tarea == 'Destruir_VM' %}
+      {% elif tarea == 'Borrar_VitualBox_Machine' %}
       ['ambientar/vboxvm','destruir/vboxvm']
-      {% elif tarea == 'Prueba_VM' %}
+      {% elif tarea == 'Prueba_VitualBox_Machine' %}
       ['prueba/vboxvm']
       {% else %}
       ['No_selecciono_ninguna_tarea']
