@@ -68,6 +68,8 @@
       echo "Tarjetas_nat_aislada"
       {% elif 'Tarjetas_aislada_nat' in vmnets %}
       echo "Tarjetas_aislada_nat"
+      {% elif 'Tarjetas_aislada_aislada' in vmnets %}
+      echo "Tarjetas_aislada_aislada"
       {% endif %}
 
 - name: Prueba 6 de ejecucio shell con recursos 
