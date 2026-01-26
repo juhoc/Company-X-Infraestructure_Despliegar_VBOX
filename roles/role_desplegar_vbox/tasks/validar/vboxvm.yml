@@ -6,3 +6,9 @@
           {% else %}
           ['validar/redes/vboxvm']
           {% endif %}
+
+- name: Inicia tareas {{ run_playbook }}
+  include_tasks: "{{ tareas_a }}.yml"
+  loop: "{{ run_playbook }}"
+  loop_control:
+    loop_var: tareas_a
