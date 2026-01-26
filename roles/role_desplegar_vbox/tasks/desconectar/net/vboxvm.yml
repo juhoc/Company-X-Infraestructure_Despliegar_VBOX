@@ -11,8 +11,8 @@
 - block:
     - name: Remover Tarjeta(s) de Red en la VM {{ vmostype }} - {{ vmname }} en VirtuaBox.
       shell: |
-      {% if 1 == vmnicnum %}
-      VBoxManage modifyvm {{ vmname }} --nic1 none
-      {% else %}
-      VBoxManage modifyvm {{ vmname }} --nic1 none --nic2 none
-      {% endif %}
+          {% if 1 == vmnicnum %}
+            VBoxManage modifyvm {{ vmname }} --nic1 none
+          {% else %}
+            VBoxManage modifyvm {{ vmname }} --nic1 none --nic2 none
+          {% endif %}
