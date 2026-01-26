@@ -80,3 +80,12 @@
       echo "Tarjeta_numero_0"
       echo "Tarjeta_numero_1"
       {% endif %}
+
+- name: Prueba 6 de mensaje con condicion
+  debug:
+    msg: 
+      {% if 'Tarjeta' == vmnet %}
+      - "Una Tarjeta"
+      {% else %}
+      - "Dos Tarjetas"
+      {% endif %}
