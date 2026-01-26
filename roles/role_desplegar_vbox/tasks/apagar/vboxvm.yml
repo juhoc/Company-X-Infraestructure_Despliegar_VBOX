@@ -1,7 +1,9 @@
 ---
 - block:
-    - name: Validar si la VM esta Prendida {{ vmostype }} - {{ vmname }} en VirtuaBox.
-      shell: VBoxManage list runningvms | grep -w lbvdhtest0 >/dev/null && echo "Started lvdhtest0" || echo "Stoped vdhtest0"
-      register: vmoutputstatusvm
+    - name: Apagar Maquina VM {{ vmostype }} - {{ vmname }} en VirtuaBox
+      shell: |
+        VBoxManage controlvm {{ vmname }} poweroff
+        sleep 30
+      register: vmoutputpwoff
 
 
