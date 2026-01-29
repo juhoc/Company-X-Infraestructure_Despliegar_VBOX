@@ -5,7 +5,7 @@
           {% if 'Tarjeta_puente_internet' in vmnets %}
             VBoxManage modifyvm {{ vmname }} --nic1 bridged --bridgeadapter1 enp0s31f6
           {% elif 'Tarjeta_aislada_sin_internete' in vmnets %}
-            VBoxManage modifyvm {{ vmname }} --nic1 hostonly --hostonlyadapter1 vboxnet0
+            VBoxManage modifyvm {{ vmname }} --nic1 hostonly --hostonlyadapter1 vboxnet1
           {% elif 'Tarjeta_nat_internet_aislada' in vmnets %}
             VBoxManage modifyvm {{ vmname }} --nic1 natnetwork --natnetwork1 vboxnat0
           {% elif 'Tarjetas_puente_aislada' in vmnets %}
