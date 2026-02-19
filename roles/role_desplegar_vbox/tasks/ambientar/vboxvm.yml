@@ -15,11 +15,11 @@
   set_fact:
     vmenv: |
       {% if 'vp' in vmname %}
-      produccion,pr
+      produccion
       {% elif 'vd' in vmname %}
-      desarrollo,ds
+      desarrollo
       {% elif 'vlo' in vmname %}
-      liga oculta,lo
+      liga oculta
       {% endif %}
     vmtier: |
       {% if 'vp' in vmname %}

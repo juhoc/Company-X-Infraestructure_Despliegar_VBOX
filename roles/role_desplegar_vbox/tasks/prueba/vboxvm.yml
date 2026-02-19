@@ -49,6 +49,7 @@
 - name: Prueba 4 de varibles 2
   debug:
     msg: 
+      - "{{ vmname }}.bvm.bluecare.kyndryl.net"
       - "{{ vmcpu | trim }}"
       - "{{ vmmem | int * 1024 }}"
       - "{{ vmdsk | int * 1025 }}"
