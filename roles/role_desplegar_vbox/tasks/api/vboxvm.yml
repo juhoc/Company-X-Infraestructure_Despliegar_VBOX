@@ -35,10 +35,11 @@
             "ostype": {{ vmostype }},
             "devicetype": computer,
             "tier": {{ vmtier | trim }},
-            "ansible_python_interpreter": "/usr/bin/python3.8"
+            "entorno": {{ vmenv | trim }},
+            "ansible_python_interpreter": "{{ vmvpython }}"
             }'
       register: add_host_response
-      when: "vbvmgst_ostype == 'RedHat_64'"
+      when: "vmostype == 'RedHat'"
 
     - name: Agregar nuevo equipo Windows al inventario
       uri:
@@ -53,15 +54,16 @@
         body:
           name: "{{ vbvmgst_name }}.bvm.bluecare.kyndryl.net"
           enabled: true
-          variables: '{ "ipaddress": {{ vbxvm_sttnet.stdout_lines[0] }},
-            "ansible_host": {{ vbxvm_sttnet.stdout_lines[0] }},
-            "ostype": {{ vbvmgst_ostype }},
+          variables: '{ "ipaddress": {{ vmnipnet.stdout_lines[0] }},
+            "ansible_host": {{ vmnipnet.stdout_lines[0] }},
+            "ostype": {{ vmostype }},
             "devicetype": computer,
-            "tier": {{ vbvmgt_envw.stdout }},
+            "tier": {{ vmtier | trim }},
+            "entorno": {{ vmenv | trim }},
             "ansible_connection": "psrp",
             "ansible_winrm_server_cert_validation": "ignore",
             "ansible_port": 5985
             }'
       register: add_host_response
-      when: "vbvmgst_ostype == 'WindowsNT_64'"
+      when: "vmostype == 'Windows'"
   delegate_to: localhost
