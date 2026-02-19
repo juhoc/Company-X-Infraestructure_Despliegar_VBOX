@@ -1,0 +1,67 @@
+---
+- name: Tareas por bloques - Ontener ID de Inventario por REST API Ansible AWX
+  block:
+    - name: Obtener inventario
+      uri:
+        url: "{{ tower_base_url }}/api/v2/organizations/{{ tower_organization }}/inventories/"
+        validate_certs: false
+        force_basic_auth: yes
+        method: GET
+        headers:
+          Authorization: "Bearer {{ tower_token }}"
+        status_code: 200
+      register: inventory_response
+    - set_fact:
+        inventory_id: "{{ (inventory_response.json.results | selectattr('name', 'equalto', tower_inventory) | first).id }}"
+  delegate_to: localhost
+
+- name: Tareas por bloques - Agregar Linux-Windows HostNode por REST API Ansible AWX
+  block:
+    - name: Agregar nuevo equipo Linux al inventario
+      uri:
+        url: "{{ tower_base_url }}/api/v2/inventories/{{ inventory_id }}/hosts/"
+        validate_certs: false
+        force_basic_auth: yes
+        status_code: 200, 201, 204, 400
+        method: POST
+        headers:
+          Authorization: "Bearer {{ tower_token }}"
+        body_format: json
+        body:
+          name: "{{ vmname }}.bvm.bluecare.kyndryl.net"
+          enabled: true
+          variables: '{ "ipaddress": {{ vmoutputnetval.stdout_lines[0] }},
+            "ansible_host": {{ vmoutputnetval.stdout_lines[0] }},
+            "ostype": {{ vmostype }},
+            "devicetype": computer,
+            "tier": {{ vbvmgt_envl.stdout }},
+            "ansible_python_interpreter": "/usr/bin/python3.8"
+            }'
+      register: add_host_response
+      when: "vbvmgst_ostype == 'RedHat_64'"
+
+    - name: Agregar nuevo equipo Windows al inventario
+      uri:
+        url: "{{ tower_base_url }}/api/v2/inventories/{{ inventory_id }}/hosts/"
+        validate_certs: false
+        force_basic_auth: yes
+        status_code: 200, 201, 204, 400
+        method: POST
+        headers:
+          Authorization: "Bearer {{ tower_token }}"
+        body_format: json
+        body:
+          name: "{{ vbvmgst_name }}.bvm.bluecare.kyndryl.net"
+          enabled: true
+          variables: '{ "ipaddress": {{ vbxvm_sttnet.stdout_lines[0] }},
+            "ansible_host": {{ vbxvm_sttnet.stdout_lines[0] }},
+            "ostype": {{ vbvmgst_ostype }},
+            "devicetype": computer,
+            "tier": {{ vbvmgt_envw.stdout }},
+            "ansible_connection": "psrp",
+            "ansible_winrm_server_cert_validation": "ignore",
+            "ansible_port": 5985
+            }'
+      register: add_host_response
+      when: "vbvmgst_ostype == 'WindowsNT_64'"
+  delegate_to: localhost

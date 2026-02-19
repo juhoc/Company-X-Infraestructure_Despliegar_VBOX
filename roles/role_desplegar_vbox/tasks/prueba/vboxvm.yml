@@ -24,12 +24,20 @@
   set_fact:
     vmenv: |
       {% if 'vp' in vmname %}
-      produccion,pr
+      produccion
       {% elif 'vd' in vmname %}
-      desarrollo,ds
+      desarrollo
       {% elif 'vlo' in vmname %}
-      liga oculta,lo
+      liga oculta
       {% endif %}
+    vmtier: |
+      {% if 'vp' in vmname %}
+      pr
+      {% elif 'vd' in vmname %}
+      ep
+      {% elif 'vlo' in vmname %}
+      lo
+      {% endif %}    
 
 - name: Prueba 3 agrupando eco de recursos
   set_fact:
@@ -44,8 +52,8 @@
       - "{{ vmcpu | trim }}"
       - "{{ vmmem | int * 1024 }}"
       - "{{ vmdsk | int * 1025 }}"
-      - "{{ vmenv.split(',')[0] | trim }}"
-      - "{{ vmenv.split(',')[1] | trim }}"
+      - "{{ vmenv | trim }}"
+      - "{{ vmtier | trim }}"
       - "{{ 'sd_data00' if 'RedHat' in vmostype else 'hd_data00' }}"
       - "{{ vmdstoresso }}"
       - "{{ vmdstoredsk }}"

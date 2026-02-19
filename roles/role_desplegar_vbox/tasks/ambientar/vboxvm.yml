@@ -21,6 +21,14 @@
       {% elif 'vlo' in vmname %}
       liga oculta,lo
       {% endif %}
+    vmtier: |
+      {% if 'vp' in vmname %}
+      pr
+      {% elif 'vd' in vmname %}
+      ep
+      {% elif 'vlo' in vmname %}
+      lo
+      {% endif %}
 
 - set_fact:
     vmcpu: "{{ vmsource.split(',')[0] | trim }}"
