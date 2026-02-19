@@ -39,7 +39,7 @@
             "ansible_python_interpreter": "{{ vmvpython }}"
             }'
       register: add_host_response
-      when: "vmostype == 'RedHat'"
+      when: "'RedHat' in vmostype"
 
     - name: Agregar nuevo equipo Windows al inventario
       uri:
@@ -65,5 +65,5 @@
             "ansible_port": 5985
             }'
       register: add_host_response
-      when: "vmostype == 'Windows'"
+      when: "'Windows' in vmostype"
   delegate_to: localhost
