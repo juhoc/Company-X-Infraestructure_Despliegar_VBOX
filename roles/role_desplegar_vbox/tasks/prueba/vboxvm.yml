@@ -50,6 +50,7 @@
   debug:
     msg: 
       - "{{ vmname }}.bvm.bluecare.kyndryl.net"
+      - "{{ vmostype }}"
       - "{{ vmcpu | trim }}"
       - "{{ vmmem | int * 1024 }}"
       - "{{ vmdsk | int * 1025 }}"
@@ -60,6 +61,7 @@
       - "{{ vmdstoredsk }}"
       - "{{ vmdstoretpt }}"
       - "{{ vmnet }}"
+      - "{{ '/usr/bin/python3.9' if 'RedHat9' in vmostype else '/usr/bin/python3.8' }}"
 
 - name: Prueba 5 de ejecucio shell con recursos
   shell: |

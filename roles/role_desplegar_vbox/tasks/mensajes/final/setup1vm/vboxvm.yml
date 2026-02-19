@@ -9,4 +9,4 @@
           - "Numero de CPU's: {{ vmsource.split(',')[0] | trim }}"
           - "Cantidad de Memoria: {{ vmsource.split(',')[1] | trim }}GB"
           - "Tamaño disco extra: {{ vmsource.split(',')[2] | trim }}GB"
-          - "IP Dinamica1: {{ vmoutputnetval.stdout_lines[0] }}"
+          - "IP Dinamica1: {{ vmnipnet.stdout_lines[0] }}"

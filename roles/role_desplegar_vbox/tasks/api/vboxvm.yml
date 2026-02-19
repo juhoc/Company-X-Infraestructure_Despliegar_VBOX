@@ -30,11 +30,11 @@
         body:
           name: "{{ vmname }}.bvm.bluecare.kyndryl.net"
           enabled: true
-          variables: '{ "ipaddress": {{ vmoutputnetval.stdout_lines[0] }},
-            "ansible_host": {{ vmoutputnetval.stdout_lines[0] }},
+          variables: '{ "ipaddress": {{ vmnipnet.stdout_lines[0] }},
+            "ansible_host": {{ vmnipnet.stdout_lines[0] }},
             "ostype": {{ vmostype }},
             "devicetype": computer,
-            "tier": {{ vbvmgt_envl.stdout }},
+            "tier": {{ vmtier | trim }},
             "ansible_python_interpreter": "/usr/bin/python3.8"
             }'
       register: add_host_response
