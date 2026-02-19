@@ -1,5 +1,8 @@
 ---
 - block:
     - name: Borrar VM {{ vmostype }} - {{ vmname }} en VirtuaBox.
-      shell: VBoxManage unregistervm {{ vmname }} --delete
+      shell: |
+        VBoxManage controlvm {{ vmname }} shutdown
+        sleep 10
+        VBoxManage unregistervm {{ vmname }} --delete
       register: vmoutputrmvm

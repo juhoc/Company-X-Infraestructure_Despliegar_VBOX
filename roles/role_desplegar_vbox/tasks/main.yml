@@ -24,7 +24,7 @@
       {% elif tarea == 'Conectar_VitualBox_Machine' %}
       ['ambientar/vboxvm','conectar/vboxvm']
       {% elif tarea == 'Borrar_VitualBox_Machine' %}
-      ['ambientar/vboxvm','destruir/vboxvm']
+      ['ambientar/vboxvm','borrar/vm/vboxvm']
       {% elif tarea == 'Prueba_VitualBox_Machine' %}
       ['prueba/vboxvm']
       {% else %}
