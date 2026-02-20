@@ -2,9 +2,9 @@
 vmdstoresso: /vmbox/Virtuals
 vmdstoredsk: /vmboxs/Virtuals
 vmdstoretpt: /vmboxs/Templates
-vmvpython: "{{ '/usr/bin/python3.9' if 'RedHat9' in vmostype else '/usr/bin/python3.8' }}"
+vmvpython: "{{ '/usr/bin/python3.9' if 'RedHat9' in vmostype else '/usr/bin/python3.6' }}"
 
-tower_base_url: "http://172.18.0.3:8052"
+tower_base_url: "http://172.18.0.5:8052"
 tower_organization: "bvmorg"
 tower_inventory: "bvm_inventory"
 tower_token: "T3qIBMvwZMS9321AL39Dlm66HeB3iX"
