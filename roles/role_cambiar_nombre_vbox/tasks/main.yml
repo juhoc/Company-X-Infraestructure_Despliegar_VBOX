@@ -4,6 +4,7 @@
 
 - block:
     - name: Cambio de nombre {{ vmostype }} - {{ vmname }} en VirtuaBox.
+      become: true
       hostname:
         name: "{{ vmnnhn.split('.')[0] }}"
       loop: "{{ host_x_host }}"
