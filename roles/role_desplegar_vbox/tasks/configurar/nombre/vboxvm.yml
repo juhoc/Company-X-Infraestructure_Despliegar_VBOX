@@ -1,0 +1,7 @@
+---
+- block:
+    - name: Cambio de nombre {{ vmostype }} - {{ vmname }} en VirtuaBox.
+      hostname:
+        name: "{{ vmname }}"
+      register: vmchkhn
+  delegate_to: "{{ vmname }}.bvm.bluecare.kyndryl.net"
