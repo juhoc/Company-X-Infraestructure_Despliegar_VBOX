@@ -1,0 +1,13 @@
+---
+- set_fact:
+    host_x_host: "{{ ansible_play_hosts_all }}"
+
+- block:
+    - name: Cambio de nombre {{ vmostype }} - {{ vmname }} en VirtuaBox.
+      hostname:
+        name: "{{ vmnnhn.split('.')[0] }}"
+      loop: "{{ host_x_host }}"
+      loop_control:
+        loop_var: vmnnhn
+
+
