@@ -1,8 +1,8 @@
 ---
-- name: PlayBook Maestro - Gestio de Virtuales
+- name: PlayBook Maestro - Gestionar Virtuales
   hosts: all
   gather_facts: false
 
   tasks:
     - include_role:
-        name: role_cambiar_nombre_vbox
+        name: role_gestionar_vbox

@@ -1,5 +1,5 @@
 ---
-- name: PlayBook Maestro - Gestio de Virtuales
+- name: PlayBook Maestro - Configura OS Virtuales
   hosts: all
   gather_facts: false
 
