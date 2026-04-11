@@ -1,5 +1,5 @@
 ---
 - block:
-    - name: Snapshot VM {{ vmostype }} - {{ vmname }} en VirtuaBox.
+    - name: Snapshot VM {{ vmname }} en VirtuaBox.
       shell: VBoxManage snapshot {{ vmname }} take {{ idhelix }}
       register: vmoutputsnap
