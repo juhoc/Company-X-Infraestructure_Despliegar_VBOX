@@ -1,13 +1,9 @@
 - set_fact:
     run_playbook: |
-      {% if tarea == 'Crear_VitualBox_Machine' %}
-      ['ambientar/vboxvm','mensajes/inicio/vboxvm','crear/vm/vboxvm','crear/clone/vboxvm','crear/disk/vboxvm','crear/net/vboxvm','prender/vboxvm','validar/vboxvm','mensajes/final/vboxvm','api/vboxvm','configurar/nombre/vboxvm']
-      {% elif tarea == 'Desconectar_VitualBox_Machine' %}
-      ['desconectar/net/vboxvm']
-      {% elif tarea == 'Conectar_VitualBox_Machine' %}
-      ['ambientar/vboxvm','conectar/vboxvm']
-      {% elif tarea == 'Borrar_VitualBox_Machine' %}
-      ['borrar/vm/vboxvm']
+      {% if tarea == 'Cambiar_hostname' %}
+      ['']
+      {% elif tarea == 'Borrar_nodo_aap' %}
+      ['']
       {% elif tarea == 'Prueba_VitualBox_Machine' %}
       ['prueba/vboxvm']
       {% else %}
